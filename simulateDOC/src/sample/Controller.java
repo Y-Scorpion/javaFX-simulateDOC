@@ -125,24 +125,23 @@ public class Controller implements Initializable {
 //                            BufferedReader br = new BufferedReader(reader);
 //                            StringBuilder stringBuilder = new StringBuilder();
 //                            String message;
-                    new Thread(()->{
                             //javaFX operations should go here
-                            try(InputStreamReader reader = new InputStreamReader(ps.getInputStream(), Charset.forName("GBK"))){
-                                int read;
-                                while((read = reader.read()) != -1){
+                        try(InputStreamReader reader = new InputStreamReader(ps.getInputStream(), Charset.forName("GBK"))){
+                            int read;
+                            while((read = reader.read()) != -1){
 //                                    System.out.print((char)read);
-                                    int finalRead = read;
-                                    Platform.runLater(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                    loggerArea.appendText(String.valueOf((char) finalRead));
-                                        }
-                                    });
-                                }
-                            } catch (IOException e){
-                                e.printStackTrace();
+                                int finalRead = read;
+                                loggerArea.appendText(String.valueOf((char) finalRead));
+//                                Platform.runLater(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                );
+//                                    }
+//                                });
                             }
-                    }).start();
+                        } catch (IOException e){
+                            e.printStackTrace();
+                        }
 //                        try {
 //                            while ((message = br.readLine()) != null) {
 //                                stringBuilder.append(message + "\n");

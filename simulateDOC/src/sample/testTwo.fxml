@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="225.0" prefWidth="530.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="sample.MainControllerTwo">
+    <center>
+        <TextArea fx:id="console" />
+    </center>
+    <bottom>
+        <Button fx:id="button"  text="Output">
+            <BorderPane.alignment>CENTER</BorderPane.alignment>
+            <BorderPane.margin><Insets bottom="5" left="5" right="5" top="5" /></BorderPane.margin>
+         <graphic>
+            <TextField fx:id="textField" prefHeight="23.0" prefWidth="187.0" />
+         </graphic>
+        </Button>
+    </bottom>
+</BorderPane>

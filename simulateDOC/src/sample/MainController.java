@@ -1,14 +1,16 @@
 package sample;
 
-import java.io.*;
-import java.nio.charset.Charset;
-
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.charset.Charset;
 
 public class MainController {
     @FXML
@@ -32,7 +34,6 @@ public class MainController {
             }
         }, true));
         System.setErr(System.out);
-//        System.setErr(ps);
         System.out.println("你好世界");
         button.setOnAction((actionEvent)->{
             this.testIpConfig();
