@@ -11,8 +11,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 //        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        Scene scene=new Scene(root, 800, 450);
+        Parent root = FXMLLoader.load(getClass().getResource("test.fxml"));
+        Scene scene=new Scene(root, 650, 450);
         //scene.getStylesheets().add(getClass().getResource("/css/Style.css").toExternalForm());
         primaryStage.setTitle("控制台输出测试");
         primaryStage.setScene(scene);
