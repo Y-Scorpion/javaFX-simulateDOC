@@ -21,7 +21,10 @@ public class MainControllerTwo {
     @FXML
     private Button button;
 
-    public void initialize() {
+    private  Process exec;
+
+
+    public void initialize() throws IOException {
         System.setOut(new PrintStream(new OutputStream() {
             @Override
             public void write(int b) {
@@ -36,55 +39,65 @@ public class MainControllerTwo {
         }, true));
         System.setErr(System.out);
         System.out.println("你好世界");
+        exec = Runtime.getRuntime().exec("cmd.exe");
         button.setOnAction((actionEvent)->{
-            this.testIpConfig();
+            try {
+                this.testIpConfig();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
 
     }
 
-    public void testIpConfig() {
-        Runtime runtime = Runtime.getRuntime();
+    public void testIpConfig() throws IOException {
         String cmdText = textField.getText();
         System.out.println(cmdText); //input文本框输入
         textField.clear();
-        button.setDisable(true); //点击按钮后将按钮暂时失效处理
-        Service<String> service=new Service<String>() {
-            @Override
-            protected Task<String> createTask() {
-                return new Task<String>() {
-                    @Override
-                    protected String call() throws Exception {
-                        Process exec = runtime.exec("cmd.exe /c " + cmdText);
-                        try(InputStreamReader reader = new InputStreamReader(exec.getInputStream(), Charset.forName("gbk"))){
-                            BufferedReader br = new BufferedReader(reader);
-                            String read;
-                            while((read = br.readLine()) != null){
-                                System.out.println(read);
-                            }
-                            br.close();
-                        } catch (IOException e){
-                            e.printStackTrace();
-                        }
+//        button.setDisable(true); //点击按钮后将按钮暂时失效处理
 
-                        return "success";
-                    }
-                };
-            }
+        PrintWriter printWriter = new PrintWriter(exec.getOutputStream());
+        BufferedReader br = new BufferedReader(new InputStreamReader(exec.getInputStream(), Charset.forName("gbk")));
+        printWriter.println(cmdText);
+        printWriter.flush();
 
-            @Override
-            protected void succeeded() {
-                super.succeeded();
-                System.out.println("结束");
-                button.setDisable(false);
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        textField.requestFocus();
-                    }
-                });
+        new Thread(()->{
+            String read;
+            try {
+                while (((read = br.readLine()) != null)) {
+                    System.out.println(read);
+                }
+//                System.out.println("a");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        };
-        service.start();
+        }).start();
+
+//        Service<String> service=new Service<String>() {
+//            @Override
+//            protected Task<String> createTask() {
+//                return new Task<String>() {
+//                    @Override
+//                    protected String call() throws IOException {
+//
+//                        return "success";
+//                    }
+//                };
+//            }
+//            @Override
+//            protected void succeeded() {
+//                super.succeeded();
+//                System.out.println("结束");
+//                button.setDisable(false);
+//                Platform.runLater(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        textField.requestFocus();
+//                    }
+//                });
+//            }
+//        };
+//        service.start();
     }
 }
